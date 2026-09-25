@@ -18,6 +18,6 @@ DATABASE_URL = (
 )
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_EXCEL_PATH = os.path.join(BASE_DIR, "data", "1G 46 QA 4.0.xlsx")
+DEFAULT_EXCEL_PATH = os.path.join(BASE_DIR, "data", "Protocol 1A43 QA 4.0.xlsx")
 MAPPING_FILE_PATH = os.path.join(BASE_DIR, "mappings", "column_mapping.json")
 LOG_FILE_PATH = os.path.join(BASE_DIR, "logs", "import.log")

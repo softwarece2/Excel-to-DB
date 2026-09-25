@@ -670,3 +670,6 @@ Traceback (most recent call last):
     ...<2 lines>...
     )
 ValueError: Sheet 'sheet1 (3)': could not locate header column(s) ['duration', 'main_type', 'max', 'min', 'param_type', 'sl_no', 'spec_val', 'test_by', 'ty_clause_no', 'unit'] in row 1. Check mappings/column_mapping.json.
+2026-09-25 18:49:53,786 | INFO     | services.importer | Sheet 'sheet1 -1': 364 parameter rows found
+2026-09-25 18:49:58,539 | INFO     | services.importer | Sheet 'sheet1 -1' committed successfully.
+2026-09-25 18:49:58,539 | INFO     | services.importer | Import finished: 1 sheet(s) processed, 364 spec row(s) inserted.
