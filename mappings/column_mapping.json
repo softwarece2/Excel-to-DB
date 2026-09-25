@@ -1,0 +1,32 @@
+{
+  "_comment": "Current ATE spec workbook -> ate.spec mapping.",
+  "header_row": 1,
+  "data_start_row": 2,
+  "fixed_prod_id": 135,
+  "fixed_test_id": 1237,
+  "columns": {
+    "sl_no": "Sl. No.",
+    "param_code": "Param code",
+    "main_type": "Main type",
+    "param_type": "Parameter type",
+    "spec_val": "Parameter description",
+    "ty_clause_no": "TY clause no",
+    "min": "Minimum value",
+    "max": "maximum value",
+    "unit": "Unit",
+    "test_type": "Test Type",
+    "test_by": "Test by",
+    "duration": "Duration in Minutes"
+  },
+  "main_type_ids": {
+    "Pre Inspection": 1,
+    "Environmental Inspection": 2,
+    "Final Inspection": 3
+  },
+  "param_type_lookup_columns": [
+    "param_type"
+  ],
+  "unit_lookup_columns": [
+    "units"
+  ]
+}
