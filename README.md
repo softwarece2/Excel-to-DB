@@ -7,15 +7,16 @@ Imports the supplied ATE Excel workbook into the existing PostgreSQL table `ate.
 The following values are configured for the current product:
 
 - `prod_id = 134`
-- `test_id = 1201`
+- `fixed_test_id = 1201` (fallback when the Excel workbook does not contain a `Test ID` column)
 - `active = true`
 
-> **Note:** When importing specifications for a new product, update the `prod_id` and `test_id` in both `services/importer.py` and `mappings/column_mapping.json`.
+> **Note:** When importing specifications for a new product, update the `prod_id` and `test_id`/`fixed_test_id` in both `services/importer.py` and `mappings/column_mapping.json`. If the workbook contains a `Test ID` column, the Excel value is used per row.
 
 ## Excel → `ate.spec`
 
 The Excel columns are mapped to the PostgreSQL `ate.spec` table as follows:
 
+- `Test ID` → `test_id` (when present; the value is used for each row)
 - `Sl. No.` → `sl_no`
 - `Param code` → `param_code`
 - `Main type` → `main_type_id`

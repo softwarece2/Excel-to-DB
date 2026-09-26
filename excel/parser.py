@@ -6,7 +6,7 @@ Parser for the current ATE specification workbook layout.
 Expected columns:
 Sl. No. | Param code | Main type | Parameter type | Parameter description |
 TY clause no | Minimum value | maximum value | Unit | Test Type |
-Test by QC & CQAI | Duration in Minutes
+Test by QC & CQAI | Duration in Minutes | Test ID
 """
 
 from dataclasses import dataclass
@@ -36,11 +36,16 @@ class ParameterRow:
     test_type: Optional[str] = None
     test_by: Optional[str] = None
     duration_raw: object = None
+    test_id: Optional[int] = None
 
 
 def _locate_header_columns(
-    ws: Worksheet, header_row: int, columns_map: Dict[str, str]
+    ws: Worksheet,
+    header_row: int,
+    columns_map: Dict[str, str],
+    optional_columns=None,
 ) -> Dict[str, int]:
+    optional_columns = set(optional_columns or [])
     normalized_targets = {
         key: _normalize(label) for key, label in columns_map.items()
     }
@@ -55,14 +60,14 @@ def _locate_header_columns(
             if key not in found and normalized_cell == target:
                 found[key] = col_idx
 
-    missing = set(normalized_targets) - set(found)
+    required = set(normalized_targets) - optional_columns
+    missing = required - set(found)
     if missing:
         raise ValueError(
-            f"Sheet '{ws.title}': could not locate header column(s) {sorted(missing)} "
-            f"in row {header_row}. Check mappings/column_mapping.json."
+            f"Sheet '{ws.title}': could not locate required header column(s) "
+            f"{sorted(missing)} in row {header_row}. Check mappings/column_mapping.json."
         )
     return found
-
 
 def _to_int(value) -> Optional[int]:
     if value in (None, ""):
@@ -86,6 +91,7 @@ def parse_parameter_rows(
     header_row: int,
     data_start_row: int,
     columns_map: Dict[str, str],
+    optional_columns=None,
 ) -> List[ParameterRow]:
     """
     Read all populated parameter rows.
@@ -93,7 +99,9 @@ def parse_parameter_rows(
     Main type / Parameter type may be merged in Excel, so the parser
     forward-fills those values down just like Sl. No. in the old template.
     """
-    col_idx = _locate_header_columns(ws, header_row, columns_map)
+    col_idx = _locate_header_columns(
+        ws, header_row, columns_map, optional_columns
+    )
 
     rows: List[ParameterRow] = []
     last_main_type = None
@@ -128,6 +136,7 @@ def parse_parameter_rows(
                 test_type=_to_text(raw["test_type"]),
                 test_by=_to_text(raw["test_by"]),
                 duration_raw=raw["duration"],
+                test_id=_to_int(raw.get("test_id")),
             )
         )
 

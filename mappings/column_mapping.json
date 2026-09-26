@@ -16,7 +16,8 @@
     "unit": "Unit",
     "test_type": "Test Type",
     "test_by": "Test by",
-    "duration": "Duration in Minutes"
+    "duration": "Duration in Minutes",
+    "test_id": "Test ID"
   },
   "main_type_ids": {
     "Pre Inspection": 1,
@@ -28,5 +29,8 @@
   ],
   "unit_lookup_columns": [
     "units"
+  ],
+  "optional_columns": [
+    "test_id"
   ]
 }

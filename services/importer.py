@@ -5,7 +5,10 @@ Imports the current ATE specification workbook directly into `ate.spec`.
 
 Fixed values supplied for this project:
   prod_id = 134
-  test_id = 1201
+  fixed test_id fallback = 1201
+
+If the Excel workbook contains a `Test ID` column, its value is used
+per row for `ate.spec.test_id`.
 
 Main Type mapping supplied for this project:
   Pre Inspection          -> 1
@@ -55,9 +58,10 @@ def run_import(excel_path: str, mapping_path: str) -> None:
     header_row = mapping["header_row"]
     data_start_row = mapping["data_start_row"]
     columns_map = mapping["columns"]
+    optional_columns = mapping.get("optional_columns", [])
 
     prod_id = int(mapping.get("fixed_prod_id", 134))
-    test_id = int(mapping.get("fixed_test_id", 1201))
+    # test_id = int(mapping.get("fixed_test_id", 1201))
 
     param_type_columns = mapping.get(
         "param_type_lookup_columns",
@@ -81,6 +85,7 @@ def run_import(excel_path: str, mapping_path: str) -> None:
                 header_row=header_row,
                 data_start_row=data_start_row,
                 columns_map=columns_map,
+                optional_columns=optional_columns,
             )
             logger.info("Sheet '%s': %d parameter rows found", sheet_name, len(rows))
 
@@ -121,10 +126,12 @@ def run_import(excel_path: str, mapping_path: str) -> None:
                     obs_type_id = 4
                     obs_value = "ok_notok"
 
+                row_test_id = row.test_id if row.test_id is not None else test_id
+
                 crud.create_spec(
                     session,
                     prod_id=prod_id,
-                    test_id=test_id,
+                    test_id=row_test_id,
                     spec_val=row.spec_val,
                     param_code=row.param_code,
                     param_type_id=param_type_id,
