@@ -56,8 +56,8 @@ def run_import(excel_path: str, mapping_path: str) -> None:
     data_start_row = mapping["data_start_row"]
     columns_map = mapping["columns"]
 
-    prod_id = int(mapping.get("fixed_prod_id", 135))
-    test_id = int(mapping.get("fixed_test_id", 1237))
+    prod_id = int(mapping.get("fixed_prod_id", 134))
+    test_id = int(mapping.get("fixed_test_id", 1201))
 
     param_type_columns = mapping.get(
         "param_type_lookup_columns",

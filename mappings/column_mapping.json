@@ -2,8 +2,8 @@
   "_comment": "Current ATE spec workbook -> ate.spec mapping.",
   "header_row": 1,
   "data_start_row": 2,
-  "fixed_prod_id": 135,
-  "fixed_test_id": 1237,
+  "fixed_prod_id": 134,
+  "fixed_test_id": 1201,
   "columns": {
     "sl_no": "Sl. No.",
     "param_code": "Param code",
